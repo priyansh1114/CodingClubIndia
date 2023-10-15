@@ -1,0 +1,50 @@
+One of the most common examples of the backtracking is to arrange N queens on
+an NxN chessboard such that no queen can strike down any other queen. A queen
+can attack horizontally, vertically, or diagonally.
+The solution to this problem is also attempted using Backtracking.
+● We first place the first queen anywhere arbitrarily and then place the next
+queen in any of the safe places.
+● We continue this process until the number of unplaced queens becomes
+zero (a solution is found) or no safe place is left.
+● If no safe place is left, then we change the position of the previously placed
+queen.
+
+
+#Number of queens
+print ( "Enter the number of queens" )
+N = int(input())
+#NxN matrix with all elements 0
+board = [[ 0 ]*N for _ in range(N)]
+def check_possible (i, j):
+#checking if there is a queen in row or column
+for k in range( 0 ,N):
+if board[i][k]== 1 or board[k][j]== 1 :
+return True
+#checking diagonals
+for k in range( 0 ,N):
+for l in range( 0 ,N):
+if (k+l==i+j) or (k-l==i-j):
+if board[k][l]== 1 :
+return True
+return False
+
+def N_queen (n):
+#if n is 0, solution found
+if n== 0 :
+return True
+for i in range( 0 ,N):
+for j in range( 0 ,N):
+'''checking if we can place a queen here or not
+queen will not be placed if the place is being attacked
+or already occupied'''
+if ( not (check_possible(i,j))) and (board[i][j]!= 1 ):
+board[i][j] = 1
+#recursion
+#check if we can put a queen in this arrangement
+if N_queen(n -1 )== True :
+return True
+board[i][j] = 0
+return False
+N_queen(N)
+for i in board:
+print (i)
